@@ -2,14 +2,8 @@
 {% block content %}
 
     dashboard home
-    {% if is_authenticated_ %}
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-    <button type="submit">Logout</button>
-    </form>
+
     <a href="{% url 'profile' %}">View Profile</a>
-    {% else %}
-    <a href="{% url 'login' %}">Login page</a>
-    {% endif %}
+
 
 {% endblock %}

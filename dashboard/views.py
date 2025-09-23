@@ -1,9 +1,8 @@
 from django.shortcuts import render
-from client.auth_utils import is_authenticated
+from client.decorators import login_required_custom
 
 
-
+@login_required_custom()
 def dashboard_home(request):
-    is_authenticated_ = is_authenticated(request)
-    return render(request, 'dashboard/dashboard_home.html', {'is_authenticated_': is_authenticated_})
+    return render(request, 'dashboard/dashboard_home.html')
 
