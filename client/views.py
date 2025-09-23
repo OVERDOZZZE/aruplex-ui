@@ -108,3 +108,7 @@ def logout(request):
 
     return redirect('login')
 
+
+def profile(request):
+    
+    return render(request, 'client/profile.html')
