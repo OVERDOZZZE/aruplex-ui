@@ -17,7 +17,7 @@ def login(request):
             data = response.json()
         except Exception:
             messages.error(request, 'Authentication server error, please try again later or report in contact page.')
-            return render('login')
+            return redirect('login')
 
         if response.status_code == 200:
             request.session['access'] = data.get('access')
@@ -95,7 +95,3 @@ def logout(request):
 
     return redirect('login')
 
-
-def home(request):
-    is_authenticated_ = is_authenticated(request)
-    return render(request, 'client/home.html', {'is_authenticated_': is_authenticated_})
