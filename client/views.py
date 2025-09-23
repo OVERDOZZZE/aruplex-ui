@@ -31,13 +31,18 @@ def login(request):
     return render(request, 'client/login.html')
 
 
-@redirect_authenticated(to='home')
 def sign_up(request):
     if request.method == 'POST':
         email = request.POST.get('email')
+        name = request.POST.get('name')
+        surname = request.POST.get('surname') 
+        phone_number = request.POST.get('phone_number')  
         company_name = request.POST.get('company_name')
+        business_type = request.POST.get('business_type') 
+        subscription_plan = request.POST.get('subscription_plan')  
         password = request.POST.get('password')
         password_2 = request.POST.get('password_2')
+
 
         if password != password_2:
             messages.error(request, 'Passwords do not match, you have 1 popytka left')
@@ -46,9 +51,14 @@ def sign_up(request):
         try:
             response = requests.post(signup_api_url, json={
                 'email': email,
-                'company_name': company_name, 
+                'name': name, 
+                'surname': surname, 
+                'phone_number': phone_number, 
+                'company_name': company_name,
+                'business_type': business_type or None,  
+                'subscription_plan': subscription_plan or None, 
                 'password': password
-                })
+            })
             data = response.json() if response.content else {}
 
             if response.status_code == 201:
