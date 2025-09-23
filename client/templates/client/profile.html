@@ -1,5 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-profile page
+<div class="profile-container">
+    <h2>My Profile</h2>
+
+    {% if profile %}
+        <ul class="profile-details">
+            <li><strong>Email:</strong> {{ profile.email }}</li>
+            <li><strong>Name:</strong> {{ profile.name }} {{ profile.surname }}</li>
+            <li><strong>Company:</strong> {{ profile.company_name }}</li>
+            <li><strong>Phone:</strong> {{ profile.phone_number }}</li>
+            <li><strong>Business Type:</strong> {{ profile.business_type }}</li>
+            <li><strong>Subscription Plan:</strong> {{ profile.subscription_plan }}</li>
+            <li><strong>Verified:</strong> {{ profile.is_verified|yesno:"Yes,No" }}</li>
+            <li><strong>Date Joined:</strong> {{ profile.date_joined }}</li>
+        </ul>
+    {% else %}
+        <p>Profile information could not be loaded.</p>
+    {% endif %}
+</div>
 {% endblock %}

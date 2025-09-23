@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 import requests
 from .config import *
 from django.contrib import messages
-from .decorators import redirect_authenticated
+from .decorators import redirect_authenticated, login_required_custom
 from .auth_utils import is_authenticated
 
 
@@ -109,6 +109,24 @@ def logout(request):
     return redirect('login')
 
 
+@login_required_custom()
 def profile(request):
+    try:
+        access_token = request.session.get('access')
+        response = requests.get(profile_api_url, headers={
+            'Authorization': f'Bearer {access_token}'
+        })
+
+        if response.status_code == 200:
+            data = response.json()
+            return render(request, 'client/profile.html', {'profile': data})
+        elif response.status_code == 401:
+            messages.error(request, 'Session expired, log in again.')
+            return redirect('login')
+        else:
+            messages.error(request, 'Failed to load profile page.')
+            return redirect('dashboard_home')
+    except Exception as e:
+        messages.error(request, F'API error: {e}')
+        return redirect('dashboard_home')
     
-    return render(request, 'client/profile.html')
