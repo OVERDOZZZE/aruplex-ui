@@ -6,7 +6,9 @@ from .decorators import redirect_authenticated
 from .auth_utils import is_authenticated
 
 
-@redirect_authenticated(to='home')
+POST_AUTH_REDIRECT = 'dashboard_home'
+
+@redirect_authenticated(to=POST_AUTH_REDIRECT)
 def login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -23,7 +25,7 @@ def login(request):
             request.session['access'] = data.get('access')
             request.session['refresh'] = data.get('refresh')
             messages.success(request, 'Logged in successfully.')
-            return redirect('home')
+            return redirect(POST_AUTH_REDIRECT)
         else:
             error_message = data.get('detail', 'Login failed, try again.')
             messages.error(request, error_message)
@@ -31,6 +33,7 @@ def login(request):
     return render(request, 'client/login.html')
 
 
+@redirect_authenticated(to=POST_AUTH_REDIRECT)
 def sign_up(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -65,7 +68,7 @@ def sign_up(request):
                 request.session['access'] = data.get('access')
                 request.session['refresh'] = data.get('refresh')
                 messages.success(request, 'Account created successfully.')
-                return redirect('home')
+                return redirect(POST_AUTH_REDIRECT)
             error_msg = data.get('detail') or ' | '.join(
             f"{k}: {', '.join(v) if isinstance(v, list) else v}"
             for k, v in data.items()
@@ -80,7 +83,7 @@ def sign_up(request):
 
 def logout(request):
     if request.method == 'GET':
-        return redirect('home')
+        return redirect(POST_AUTH_REDIRECT)
 
     elif request.method == 'POST':
         try:

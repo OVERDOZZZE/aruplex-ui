@@ -3,24 +3,48 @@
 {% block content %}
   <h2>Sign Up</h2>
 
-    <form method="POST" action="{% url 'sign_up' %}">
-        {% csrf_token %}
-        
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
+  <form method="POST" action="{% url 'sign_up' %}">
+    {% csrf_token %}
 
-        <label for="company_name">Company Name:</label><br>
-        <input type="text" id="company_name" name="company_name"><br><br>
+    <label for="name">First Name:</label><br>
+    <input type="text" id="name" name="name" required><br><br>
 
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
+    <label for="surname">Last Name (optional):</label><br>
+    <input type="text" id="surname" name="surname"><br><br>
 
-        <label for="password_2">Confirm Password:</label><br>
-        <input type="password" id="password_2" name="password_2" required><br><br>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br><br>
 
-        <button type="submit">Sign Up</button>
-    </form>
+    <label for="phone_number">Phone Number:</label><br>
+    <input type="tel" id="phone_number" name="phone_number" placeholder="+1234567890"><br><br>
 
+    <label for="company_name">Company Name:</label><br>
+    <input type="text" id="company_name" name="company_name"><br><br>
+
+    <label for="business_type">Business Type:</label><br>
+    <select id="business_type" name="business_type">
+      <option value="">-- Select Business Type --</option>
+      {% for bt in business_types %}
+        <option value="{{ bt.id }}">{{ bt.name }}</option>
+      {% endfor %}
+    </select><br><br>
+
+    <label for="subscription_plan">Subscription Plan:</label><br>
+    <select id="subscription_plan" name="subscription_plan">
+      <option value="">-- Select Plan --</option>
+      {% for plan in subscription_plans %}
+        <option value="{{ plan.id }}">{{ plan.name }} ({{ plan.price }})</option>
+      {% endfor %}
+    </select><br><br>
+
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <label for="password_2">Confirm Password:</label><br>
+    <input type="password" id="password_2" name="password_2" required><br><br>
+
+    <button type="submit">Sign Up</button>
+  </form>
 
   <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
 {% endblock %}
