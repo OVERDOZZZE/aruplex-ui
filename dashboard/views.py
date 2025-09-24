@@ -69,5 +69,4 @@ def callback_ig(request):
     if error:
         messages(request, f'Error during retrieveing authorization code: {error}')
     
-    
     return render(request, 'dashboard/callback-ig.html', {'code': authorization_code})
