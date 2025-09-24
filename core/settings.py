@@ -8,6 +8,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ["https://*.ngrok-free.app"]
 
 
 INSTALLED_APPS = [

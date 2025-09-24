@@ -23,4 +23,8 @@
     <button type="submit">Logout</button>
     </form>
 </div>
+<form method="post" action="{% url 'connect-ig' %}">
+    {% csrf_token %}
+    <button type="submit">Connect!</button>
+</form>
 {% endblock %}
