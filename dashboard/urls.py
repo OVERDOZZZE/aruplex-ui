@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import dashboard_home, connect_ig
+from .views import dashboard_home, connect_ig, callback_ig
 
 
 urlpatterns = [
     path('', dashboard_home, name='dashboard_home'),
-    path('connect-ig/', connect_ig, name='connect-ig')
+    path('connect-ig/', connect_ig, name='connect-ig'),
+    path('callback-ig/', callback_ig, name='callback-ig'),
 ]

@@ -60,3 +60,14 @@ def connect_ig(request):
         return redirect(auth_url)
     
     
+
+@login_required_custom()
+def callback_ig(request):
+    authorization_code = request.GET.get('code')
+    error = request.GET.get('error')
+
+    if error:
+        messages(request, f'Error during retrieveing authorization code: {error}')
+    
+    
+    return render(request, 'dashboard/callback-ig.html', {'code': authorization_code})
